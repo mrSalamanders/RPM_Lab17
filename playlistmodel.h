@@ -15,6 +15,9 @@ class PlaylistModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
+    /**
+     * @brief The Column enum енум для колонок
+     */
     enum Column
     {
         Title = 0,
@@ -45,14 +48,41 @@ public:
     void setPlaylist(QMediaPlaylist *playlist);
 
 private slots:
+    /**
+     * @brief beginInsertItems функция начала вставки элементов
+     * @param start индекс начала
+     * @param end индекс конца
+     */
     void beginInsertItems(int start, int end);
+    /**
+     * @brief beginInsertItems функция окончания вставки элементов
+     */
     void endInsertItems();
+    /**
+     * @brief beginInsertItems функция начала удаления элементов
+     * @param start индекс начала
+     * @param end индекс конца
+     */
     void beginRemoveItems(int start, int end);
+    /**
+     * @brief beginInsertItems функция окончания удаления элементов
+     */
     void endRemoveItems();
+    /**
+     * @brief changeItems функция смены элементов
+     * @param start индекс начала
+     * @param end индекс конца
+     */
     void changeItems(int start, int end);
 
 private:
+    /**
+     * @brief m_playlist поле для хранения плейлиста
+     */
     QScopedPointer<QMediaPlaylist> m_playlist;
+    /**
+     * @brief m_data поле хранения данных
+     */
     QMap<QModelIndex, QVariant> m_data;
 };
 

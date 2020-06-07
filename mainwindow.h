@@ -25,13 +25,27 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-
+    /**
+     * @brief playlistBackup документ с таймингами видео
+     */
     QJsonDocument playlistBackup;
+    /**
+     * @brief jo объект к документу
+     */
     QJsonObject jo;
+    /**
+     * @brief restored восстановленные из файла тайминги видео
+     */
     QMap<QString, qint64> restored;
-
+    /**
+     * @brief takeFromMap функция изъятия из мапы
+     * @return вернет текущую позицию текущего видео
+     */
     qint64 takeFromMap();
 private slots:
+    /**
+     * @brief onActionRemoveTriggered слот для кноки "удалить"
+     */
     void onActionRemoveTriggered();
     /**
      * @brief onActionOpenTriggered слот для кнопки "открыть"
@@ -46,18 +60,48 @@ private slots:
      */
     void onActionPauseTriggered();
     /**
-     * @brief positionChanged слот для ползунка времени
-     * @param position
+     * @brief onActionNextTriggered слот для кнопки "следующий"
      */
     void onActionNextTriggered();
+    /**
+     * @brief onActionPrevTriggered слот для кнопки "предыдущий"
+     */
     void onActionPrevTriggered();
+    /**
+     * @brief positionChanged слот смены позиции
+     * @param position непосредственно позиция
+     */
     void positionChanged(qint64 position);
+    /**
+     * @brief pausePlayFlipFlop смена паузы на плей и наоборот
+     */
     void pausePlayFlipFlop();
+    /**
+     * @brief jump функция перехода к элементу из списка
+     * @param index его индекс
+     */
     void jump(const QModelIndex &index);
+    /**
+     * @brief checkBackup проверка файла бекапа
+     */
     void checkBackup();
+    /**
+     * @brief restore фукнция извлечения и подготовки данных из бекапа
+     * если файлы отстуствуют, то они будут удалены из списка восстановления
+     */
     void restore();
+    /**
+     * @brief backup создание бекапа таймингов видео
+     */
     void backup();
+    /**
+     * @brief backupToFile запись в файл таймингов
+     */
     void backupToFile();
+    /**
+     * @brief closeEvent обработка закрытия окна
+     * @param event событие закрытия
+     */
     void closeEvent (QCloseEvent *event);
 
 private:

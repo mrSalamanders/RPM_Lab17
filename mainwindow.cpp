@@ -103,7 +103,7 @@ void MainWindow::checkBackup()
               val = file.readAll();
               file.close();
 //              qWarning() << val;
-              QJsonDocument doc = QJsonDocument::fromJson(val.toLocal8Bit()); /// from here
+              QJsonDocument doc = QJsonDocument::fromJson(val.toLocal8Bit());
               QJsonObject obj = doc.object();
 
               QStringList l = obj.keys();
@@ -119,11 +119,12 @@ void MainWindow::checkBackup()
                               qDebug() << "Exist" << i;
                           } else {
                               qDebug() << "does not exist" << i;
+                              obj.remove(i);
                           }
               }
 //              jo.remove("");
-        QJsonDocument jd(jo);
-        this->playlistBackup = jd; /// to here
+        QJsonDocument jd(obj);
+        this->playlistBackup = jd;
         this->jo = playlistBackup.object();
         qDebug() << this->playlistBackup;
         qDebug() << this->jo;
@@ -198,6 +199,7 @@ void MainWindow::backupToFile()
 
 void MainWindow::closeEvent (QCloseEvent *event)
 {
+    this->mediaPlayer->pause();
     QMessageBox::StandardButton resBtn = QMessageBox::question( this, "A?",
                                                                 tr("Want quit?\nPlaylist timings will be saved\n"),
                                                                 QMessageBox::No | QMessageBox::Yes,
